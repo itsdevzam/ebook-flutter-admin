@@ -1,0 +1,168 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--  &lt;!&ndash;-->
+<!--    If you are serving your web app in a path other than the root, change the-->
+<!--    href value below to reflect the base path you are serving from.-->
+
+<!--    The path provided below has to start and end with a slash "/" in order for-->
+<!--    it to work correctly.-->
+
+<!--    For more details:-->
+<!--    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base-->
+
+<!--    This is a placeholder for base href that will be replaced by the value of-->
+<!--    the `&#45;&#45;base-href` argument provided to `flutter build`.-->
+<!--  &ndash;&gt;-->
+<!--  <base href="$FLUTTER_BASE_HREF">-->
+
+<!--  <meta charset="UTF-8">-->
+<!--  <meta content="IE=Edge" http-equiv="X-UA-Compatible">-->
+<!--  <meta name="description" content="A new Flutter project.">-->
+
+<!--  &lt;!&ndash; iOS meta tags & icons &ndash;&gt;-->
+<!--  <meta name="mobile-web-app-capable" content="yes">-->
+<!--  <meta name="apple-mobile-web-app-status-bar-style" content="black">-->
+<!--  <meta name="apple-mobile-web-app-title" content="ebook_admin">-->
+<!--  <link rel="apple-touch-icon" href="icons/Icon-192.png">-->
+
+<!--  &lt;!&ndash; Favicon &ndash;&gt;-->
+<!--  <link rel="icon" type="image/png" href="favicon.png"/>-->
+
+<!--  <title>ebook_admin</title>-->
+<!--  <link rel="manifest" href="manifest.json">-->
+<!--</head>-->
+<!--<body>-->
+<!--  <script src="flutter_bootstrap.js" async></script>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="ebook_admin">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>ebook_admin</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    /* Fullscreen preloader */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      z-index: 999999;
+    }
+
+    /* Outer circular spinner container */
+    .spinner {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    /* rotating ring */
+    .spinner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 6px solid rgba(0,0,0,0.08);
+      border-top-color: #1976d2; /* spinner color */
+      animation: spin 1s linear infinite;
+      box-sizing: border-box;
+    }
+
+    /* small logo centered inside the spinner */
+    .spinner img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: contain;
+      animation: pulse 1.8s ease-in-out infinite;
+      display: block;
+      z-index: 2;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%   { transform: scale(0.95); }
+      50%  { transform: scale(1.05); }
+      100% { transform: scale(0.95); }
+    }
+
+    /* smooth fadeout */
+    .preloader-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 350ms ease;
+    }
+  </style>
+</head>
+<body>
+<!-- Preloader shown BEFORE Flutter initializes -->
+<div id="preloader" role="status" aria-label="Loading">
+  <div class="spinner" aria-hidden="true">
+    <!-- Put your logo in web/assets/logo.png -->
+    <img src="assets/main.png" alt="Main">
+  </div>
+</div>
+
+<!-- Flutter bootstrap (keep as-is) -->
+<script src="flutter_bootstrap.js" async></script>
+
+<script>
+  // Hide preloader when Flutter renders first frame (preferred)
+  function hidePreloader() {
+    const pre = document.getElementById('preloader');
+    if (!pre) return;
+    pre.classList.add('preloader-hidden');
+    // remove element after transition so Flutter can take over cleanly
+    setTimeout(() => {
+      if (pre && pre.parentNode) pre.parentNode.removeChild(pre);
+    }, 500);
+  }
+
+  // Most reliable: Flutter dispatches 'flutter-first-frame' when it finishes its first frame.
+  // Listen for it and hide preloader. Also use a load fallback and a timeout.
+  window.addEventListener('flutter-first-frame', hidePreloader);
+
+  // Fallback: hide after window load (in case flutter-first-frame doesn't fire)
+  window.addEventListener('load', function () {
+    // small delay to allow potential flutter-first-frame to fire first
+    setTimeout(() => {
+      hidePreloader();
+    }, 300);
+  });
+
+  // Final safety: if nothing happened within X seconds (e.g., offline), hide to avoid stuck UI
+  setTimeout(() => {
+    hidePreloader();
+  }, 15000);
+</script>
+</body>
+</html>
